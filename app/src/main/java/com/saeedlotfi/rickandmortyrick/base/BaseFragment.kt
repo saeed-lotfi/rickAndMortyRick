@@ -5,21 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import com.saeedlotfi.rickandmortyrick.data.remote.Failure
+import androidx.viewbinding.ViewBinding
+import com.saeedlotfi.rickandmortyrick.R
+import com.saeedlotfi.rickandmortyrick.data.local.Failure
 
 
-abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
+abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
 
     protected abstract val viewModel: VM
+
+
+    abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
+
+    val binding get() = _binding!!
+
+    private var _binding: VB? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(getLayoutId(), container, false)
+        _binding = bindingInflater.invoke(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,27 +36,38 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
         observeErrorLiveData()
 
+        observeLoadingLiveData()
+
         initialize()
 
     }
+
+    private fun observeLoadingLiveData() {
+        viewModel.isLoading.observe(viewLifecycleOwner)
+        {
+            manageProgressBar(it)
+        }
+    }
+
+    abstract fun manageProgressBar(isVisible: Boolean)
 
     private fun observeErrorLiveData() {
         viewModel.handleFailure.observe(viewLifecycleOwner) {
             when (it) {
                 Failure.EmptyResponse -> {
-                    showToast()
+                    showToast(getString(R.string.error))
                 }
                 is Failure.GeneralError -> {
-                    showToast()
+                    showToast(getString(R.string.error))
                 }
                 is Failure.HttpError -> {
-                    showToast()
+                    showToast(it.message)
                 }
                 Failure.NoConnectivityError -> {
-                    showToast()
+                    showToast(getString(R.string.no_intenet))
                 }
                 is Failure.UnknownHostError -> {
-                    showToast()
+                    showToast(getString(R.string.error))
                 }
             }
         }
@@ -57,8 +77,10 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 
-    @LayoutRes
-    abstract fun getLayoutId(): Int
-
     abstract fun initialize()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -1,4 +1,6 @@
-package com.saeedlotfi.rickandmortyrick.data.remote
+package com.saeedlotfi.rickandmortyrick.core
+
+import com.saeedlotfi.rickandmortyrick.data.local.Failure
 
 data class Resource<out T>(val status: Status,
                            val data: T?,

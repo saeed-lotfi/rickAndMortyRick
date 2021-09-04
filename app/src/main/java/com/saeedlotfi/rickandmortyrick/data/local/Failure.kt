@@ -1,10 +1,10 @@
-package com.saeedlotfi.rickandmortyrick.data.remote
+package com.saeedlotfi.rickandmortyrick.data.local
 
 import com.google.gson.annotations.SerializedName
 import java.io.IOException
 import java.lang.Exception
 
-sealed class Failure : Exception() {
+sealed class Failure : IOException() {
     class UnknownHostError : Failure()
     class HttpError(var code: Int, override var message: String) : Failure()
     object NoConnectivityError : Failure()

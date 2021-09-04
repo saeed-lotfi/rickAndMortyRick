@@ -2,8 +2,8 @@ package com.saeedlotfi.rickandmortyrick.data.remote.util
 
 import android.content.Context
 import com.google.gson.Gson
-import com.saeedlotfi.rickandmortyrick.data.remote.BaseErrorDto
-import com.saeedlotfi.rickandmortyrick.data.remote.Failure
+import com.saeedlotfi.rickandmortyrick.data.local.BaseErrorDto
+import com.saeedlotfi.rickandmortyrick.data.local.Failure
 import com.saeedlotfi.rickandmortyrick.util.isNetworkAvailable
 import okhttp3.Interceptor
 import okhttp3.Response

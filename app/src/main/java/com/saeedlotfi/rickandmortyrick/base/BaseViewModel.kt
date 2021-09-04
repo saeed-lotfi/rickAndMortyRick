@@ -2,9 +2,9 @@ package com.saeedlotfi.rickandmortyrick.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.saeedlotfi.rickandmortyrick.data.remote.Failure
-import com.saeedlotfi.rickandmortyrick.data.remote.Resource
-import com.saeedlotfi.rickandmortyrick.data.remote.Status
+import com.saeedlotfi.rickandmortyrick.core.Resource
+import com.saeedlotfi.rickandmortyrick.core.Status
+import com.saeedlotfi.rickandmortyrick.data.local.Failure
 import com.saeedlotfi.rickandmortyrick.util.SingleLiveEvent
 import kotlinx.coroutines.CoroutineExceptionHandler
 
