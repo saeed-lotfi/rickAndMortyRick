@@ -3,8 +3,10 @@ package com.saeedlotfi.rickandmortyrick.ui.character
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.saeedlotfi.rickandmortyrick.base.BaseFragment
+import com.saeedlotfi.rickandmortyrick.data.local.model.CharacterDetailModel
 import com.saeedlotfi.rickandmortyrick.databinding.FragmentCharactersBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -20,12 +22,35 @@ class CharactersFragment : BaseFragment<MainViewModel, FragmentCharactersBinding
         initRecyclerView()
 
         observeLiveData()
+
+        manageClick()
+    }
+
+    private fun manageClick() {
+        charactersAdapter.click = object : (CharacterDetailModel) -> Unit {
+            override fun invoke(model: CharacterDetailModel) {
+
+                val action =
+                    CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailFragment(
+                        model
+                    )
+
+                findNavController().navigate(action)
+
+            }
+
+        }
     }
 
     private fun observeLiveData() {
         viewModel.characters.observe(viewLifecycleOwner, {
             charactersAdapter.submitList(it.characterResponseModels)
         })
+
+        viewModel.isLoading.observe(viewLifecycleOwner)
+        {
+            manageProgressBar(it)
+        }
     }
 
     private fun initRecyclerView() {
@@ -36,7 +61,7 @@ class CharactersFragment : BaseFragment<MainViewModel, FragmentCharactersBinding
         }
     }
 
-    override fun manageProgressBar(isVisible: Boolean) {
+    private fun manageProgressBar(isVisible: Boolean) {
         binding.root.setProgressVisibility(isVisible)
     }
 

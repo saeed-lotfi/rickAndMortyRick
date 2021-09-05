@@ -15,7 +15,6 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
 
     protected abstract val viewModel: VM
 
-
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
 
     val binding get() = _binding!!
@@ -36,20 +35,9 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
 
         observeErrorLiveData()
 
-        observeLoadingLiveData()
-
         initialize()
-
     }
 
-    private fun observeLoadingLiveData() {
-        viewModel.isLoading.observe(viewLifecycleOwner)
-        {
-            manageProgressBar(it)
-        }
-    }
-
-    abstract fun manageProgressBar(isVisible: Boolean)
 
     private fun observeErrorLiveData() {
         viewModel.handleFailure.observe(viewLifecycleOwner) {

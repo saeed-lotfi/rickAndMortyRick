@@ -1,7 +1,7 @@
 package com.saeedlotfi.rickandmortyrick.di
 
-import com.saeedlotfi.rickandmortyrick.data.local.repository.CharacterRepository
-import com.saeedlotfi.rickandmortyrick.data.local.repository.CharacterRepositoryImpl
+import com.saeedlotfi.rickandmortyrick.data.repository.CharacterRepository
+import com.saeedlotfi.rickandmortyrick.data.repository.CharacterRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

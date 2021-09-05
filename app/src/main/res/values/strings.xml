@@ -3,4 +3,6 @@
     <string name="characters">Characters</string>
     <string name="error">Error</string>
     <string name="no_intenet">connect to internet!!</string>
+    <string name="commaSpace">, </string>
+    <string name="episodes">Episodes</string>
 </resources>
