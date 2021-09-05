@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.saeedlotfi.rickandmortyrick.base.BaseViewModel
 import com.saeedlotfi.rickandmortyrick.core.Status
-import com.saeedlotfi.rickandmortyrick.data.repository.CharacterRepository
 import com.saeedlotfi.rickandmortyrick.data.remote.model.CharactersResponseModel
+import com.saeedlotfi.rickandmortyrick.data.repository.CharacterRepository
 import com.saeedlotfi.rickandmortyrick.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,9 +40,10 @@ class MainViewModel @Inject constructor(private val characterRepository: Charact
                     manageException(response)
                 }
             }
-
-            disableLoading()
-
+            withContext(Dispatchers.Main)
+            {
+                disableLoading()
+            }
 
         }
     }
