@@ -1,4 +1,4 @@
-package com.saeedlotfi.rickandmortyrick.data.local.repository
+package com.saeedlotfi.rickandmortyrick.data.repository
 
 import com.saeedlotfi.rickandmortyrick.core.Resource
 import com.saeedlotfi.rickandmortyrick.data.remote.ApiService

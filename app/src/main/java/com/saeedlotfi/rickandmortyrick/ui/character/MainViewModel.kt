@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.saeedlotfi.rickandmortyrick.base.BaseViewModel
 import com.saeedlotfi.rickandmortyrick.core.Status
-import com.saeedlotfi.rickandmortyrick.data.local.repository.CharacterRepository
+import com.saeedlotfi.rickandmortyrick.data.repository.CharacterRepository
 import com.saeedlotfi.rickandmortyrick.data.remote.model.CharactersResponseModel
 import com.saeedlotfi.rickandmortyrick.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

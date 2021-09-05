@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.saeedlotfi.rickandmortyrick.R
+import com.saeedlotfi.rickandmortyrick.data.local.model.CharacterDetailModel
 import com.saeedlotfi.rickandmortyrick.data.remote.model.CharacterResponseModel
 import javax.inject.Inject
 
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class CharactersAdapter @Inject constructor() :
     ListAdapter<CharacterResponseModel, CharactersAdapter.CharacterViewHolder>(diffUtil) {
 
+    var click: ((CharacterDetailModel) -> Unit)? = null
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<CharacterResponseModel>() {
@@ -47,11 +49,25 @@ class CharactersAdapter @Inject constructor() :
         val name = holder.itemView.findViewById<TextView>(R.id.tvName)
         val imageView = holder.itemView.findViewById<ImageView>(R.id.profileImg)
 
-        val item =  getItem(position)
+        val item = getItem(position)
 
         name.text = item.name
 
         Glide.with(imageView).load(item.image).into(imageView)
+
+        holder.itemView.setOnClickListener {
+            click?.invoke(
+                CharacterDetailModel(
+                    name = item.name,
+                    status = item.status,
+                    species = item.species,
+                    gender = item.gender,
+                    episode = item.episode,
+                    imgProfile = item.image
+                )
+            )
+
+        }
 
     }
 
